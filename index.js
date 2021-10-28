@@ -34,7 +34,7 @@ db.mongoose
   })
   .then(() => {
     console.log("Connected to the database!");
-    app.listen(PORT, ()=> console.log(`Server on port ${PORT}`.bgGreen.black));
+    app.listen(PORT, ()=> console.log(`Server on port ${PORT}`.america));
   })
   .catch(err => {
     console.log("Cannot connect to the database!", err);

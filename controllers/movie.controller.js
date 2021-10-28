@@ -1,12 +1,12 @@
 const db = require("../models");
-const Ca = db.cas;
+const Movie = db.movies;
 
-const CaController = {}; //Create the object controller
+const MovieController = {}; //Create the object controller
 
 //CRUD end-points Functions
 //-------------------------------------------------------------------------------------
 // Create and Save a new Ca
-CaController.create = (req, res) => {
+MovieController.create = (req, res) => {
   // Validate request
   if (!req.body.nombre) {
     res.status(400).send({ message: "Content can not be empty!" });
@@ -14,15 +14,16 @@ CaController.create = (req, res) => {
   }
 
   // Create a Ca
-  const ca = new Ca({
-    nombre: req.body.nombre,
-    poblacion: req.body.poblacion,
-    superficie: req.body.superficie,
+  const movie = new Movie({
+    title: req.body.title,
+    genre: req.body.genre,
+    cast: req.body.cast,
+    year: req.body.year,
   });
 
   // Save ca in the database
-  ca
-    .save(ca)
+  movie
+    .save(movie)
     .then(data => {
       res.send(data);
     })
@@ -37,11 +38,11 @@ CaController.create = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 // Retrieve all ca from the database.
-CaController.findAll = (req, res) => {
-  const nombre = req.query.nombre;
-  var condition = nombre ? { nombre: { $regex: new RegExp(nombre), $options: "i" } } : {};
+MovieController.findAll = (req, res) => {
+  const title = req.query.title;
+  var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 
-  Ca.find(condition)
+  Movie.find(condition)
     .then(data => {
       res.send(data);
     })
@@ -56,10 +57,10 @@ CaController.findAll = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 // Find a single ca with an id
-CaController.findOne = (req, res) => {
+MovieController.findOne = (req, res) => {
   const id = req.params.id;
 
-  Ca.findById(id)
+  Movie.findById(id)
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found ca with id " + id });
@@ -75,7 +76,7 @@ CaController.findOne = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 // Update a Ca by the id in the request
-CaController.update = (req, res) => {
+MovieController.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
@@ -84,7 +85,7 @@ CaController.update = (req, res) => {
 
   const id = req.params.id;
 
-  Ca.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Movie.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -102,10 +103,10 @@ CaController.update = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 // Delete a Ca with the specified id in the request
-CaController.delete = (req, res) => {
+MovieController.delete = (req, res) => {
   const id = req.params.id;
 
-  Ca.findByIdAndRemove(id, { useFindAndModify: false })
+  Movie.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -127,8 +128,8 @@ CaController.delete = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 // Delete all Ca from the database.
-CaController.deleteAll = (req, res) => {
-    Ca.deleteMany({})
+MovieController.deleteAll = (req, res) => {
+    Movie.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Ca were deleted successfully!`
@@ -144,4 +145,4 @@ CaController.deleteAll = (req, res) => {
 
 
 
-module.exports = CaController;
+module.exports = MovieController;

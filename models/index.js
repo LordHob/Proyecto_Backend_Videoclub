@@ -7,9 +7,9 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 
-db.cas = require("./ca.model")(mongoose);
-db.provinces = require("./province.model")(mongoose);
-db.cities = require("./city.model.js")(mongoose);
+db.movies = require("./movie.model")(mongoose);
+db.orders = require("./order.model")(mongoose);
+// db.cities = require("./city.model.js")(mongoose);
 db.users = require("./user.model.js")(mongoose);
 
 module.exports = db;

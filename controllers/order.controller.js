@@ -1,31 +1,29 @@
 const db = require("../models");
-const City = db.cities;
+const Order = db.orders;
 
-const CityController = {}; //Create the object controller
+const OrderController = {}; //Create the object controller
 
 //CRUD end-points Functions
 //-------------------------------------------------------------------------------------
-// Create and Save a new City
-CityController.create = (req, res) => {
+// Create and Save a new Province
+OrderController.create = (req, res) => {
   // Validate request
   if (!req.body.nombre) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
 
-  // Create a City
-  const city = new City({
-    nombre: req.body.nombre,
-    poblacion: req.body.poblacion,
-    cp: req.body.cp,
-    capital_pro: req.body.capital_pro,
-    capital_ca: req.body.capital_ca,
-    provinceId: req.body.provinceId
+  // Create a Order
+  const order = new Order({
+    idUser: req.body.idUser,
+    idMovie: req.body.idMovie,
+    rentalDate: req.body.rentalDate,
+    returnDate: req.body.returnDate
   });
 
-  // Save City in the database
-  city
-    .save(city)
+  // Save Province in the database
+  order
+    .save(order)
     .then(data => {
       res.send(data);
     })
@@ -39,46 +37,46 @@ CityController.create = (req, res) => {
 
 
 //-------------------------------------------------------------------------------------
-// Retrieve all Cities from the database.
-CityController.findAll = (req, res) => {
-  const nombre = req.query.nombre;
-  var condition = nombre ? { nombre: { $regex: new RegExp(nombre), $options: "i" } } : {};
+// Retrieve all provinces from the database.
+OrderController.findAll = (req, res) => {
+  const id = req.query.id;
+  var condition = id ? { id: { $regex: new RegExp(id), $options: "i" } } : {};
 
-  City.find(condition)
+  Order.find(condition)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Cities."
+          err.message || "Some error occurred while retrieving provinces."
       });
     });
 };
 
 
 //-------------------------------------------------------------------------------------
-// Find a single City with an id
-CityController.findOne = (req, res) => {
+// Find a single Province with an id
+OrderController.findOne = (req, res) => {
   const id = req.params.id;
 
-  City.findById(id)
+  Order.findById(id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found City with id " + id });
+        res.status(404).send({ message: "Not found Province with id " + id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving City with id=" + id });
+        .send({ message: "Error retrieving Province with id=" + id });
     });
 };
 
 
 //-------------------------------------------------------------------------------------
-// Update a City by the id in the request
-CityController.update = (req, res) => {
+// Update a Province by the id in the request
+OrderController.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
@@ -87,60 +85,60 @@ CityController.update = (req, res) => {
 
   const id = req.params.id;
 
-  City.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Order.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update City with id=${id}. Maybe City was not found!`
+          message: `Cannot update Province with id=${id}. Maybe Province was not found!`
         });
-      } else res.send({ message: "City was updated successfully." });
+      } else res.send({ message: "Province was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating City with id=" + id
+        message: "Error updating Province with id=" + id
       });
     });
 };
 
 
 //-------------------------------------------------------------------------------------
-// Delete a City with the specified id in the request
-CityController.delete = (req, res) => {
+// Delete a Province with the specified id in the request
+OrderController.delete = (req, res) => {
   const id = req.params.id;
 
-  City.findByIdAndRemove(id, { useFindAndModify: false })
+  Order.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete City with id=${id}. Maybe City was not found!`
+          message: `Cannot delete Province with id=${id}. Maybe Province was not found!`
         });
       } else {
         res.send({
-          message: "City was deleted successfully!"
+          message: "Province was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete City with id=" + id
+        message: "Could not delete Province with id=" + id
       });
     });
 };
 
 
 //-------------------------------------------------------------------------------------
-// Delete all Cities from the database.
-CityController.deleteAll = (req, res) => {
-    City.deleteMany({})
+// Delete all provinces from the database.
+OrderController.deleteAll = (req, res) => {
+    Order.deleteMany({})
     .then(data => {
       res.send({
-        message: `${data.deletedCount} Cities were deleted successfully!`
+        message: `${data.deletedCount} provinces were deleted successfully!`
       });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all Cities."
+          err.message || "Some error occurred while removing all provinces."
       });
     });
 };
@@ -148,17 +146,17 @@ CityController.deleteAll = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 // Find all published Tutorials
-CityController.findAllAvailable = (req, res) => {
-    City.find({ available: true })
+OrderController.findAllAvailable = (req, res) => {
+    Order.find({ available: true })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Cities."
+          err.message || "Some error occurred while retrieving provinces."
       });
     });
 };
 
-module.exports = CityController;
+module.exports = OrderController;
