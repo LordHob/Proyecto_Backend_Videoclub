@@ -65,7 +65,7 @@ MovieController.findAll = (req, res) => {
 
 //-------------------------------------------------------------------------------------
 // Find a single movie with an id
-MovieController.findOne = (req, res) => {
+MovieController.findById = (req, res) => {
   const id = req.params.id;
 
   Movie.findById(id)
