@@ -1,108 +1,92 @@
 const db = require("../models");
 const User = db.users;
+// const { user } = require('../models/index');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth');
 
 const UserController = {}; //Create the object controller
 
-//CRUD end-points Functions
 //-------------------------------------------------------------------------------------
-// Create and Save a new City
-UserController.create = (req, res) => {
-  // Validate request
-  if (!req.body.nombre) {
-    res.status(400).send({ message: "Content can not be empty!" });
-    return;
-  }
+//Login user with database
+//get user
+UserController.signIn = (req, res) => {
+  let { email, password } = req.body;
+  // Buscar usuario
+  User.findOne({
+    where: { email: email }
+  }).then(user => {
+    if (!user) {
+      res.status(404).json({ msg: "Usuario con este correo no encontrado" });
+    } else {
+      if (bcrypt.compareSync(password, user.password)) {
+        // Creamos el token
+        let token = jwt.sign({ user: user }, authConfig.secret, {
+          expiresIn: authConfig.expires
+        });
 
-  // Create a User
-  const user = new User({
-    _id: req.body.id,
+        res.json({
+          user: user,
+          token: token
+        })
+      } else {
+        // Unauthorized Access
+        res.status(401).json({ msg: "Contraseña incorrecta" })
+      }
+    }
+  }).catch(err => {
+    res.status(500).json(err);
+  })
+};
+
+
+//-------------------------------------------------------------------------------------
+//REGISTER new user in database
+//create user
+UserController.signUp = (req, res) => {
+
+  // Encriptamos la contraseña
+  let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+
+  // Crear un usuario
+  User.create({
     name: req.body.name,
     email: req.body.email,
-    password: req.body.password,
+    password: password,
+    rol: req.body.rol
+  }).then(user => {
+
+    // Creamos el token
+    let token = jwt.sign({ user: user }, authConfig.secret, {
+      expiresIn: authConfig.expires
+    });
+
+    res.json({
+      user: user,
+      token: token
+    });
+
+  }).catch(err => {
+    res.status(500).json(err);
   });
 
-  // Save User in the database
-  user
-    .save(user)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial."
-      });
-    });
 };
 
-
-//-------------------------------------------------------------------------------------
-// Retrieve all Cities from the database.
-UserController.findAll = (req, res) => {
-  const name = req.query.name;
-  var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-
-  User.find(condition)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Cities."
-      });
-    });
-};
-
-
-//-------------------------------------------------------------------------------------
-// Find a single City with an id
 UserController.findOne = (req, res) => {
   const id = req.params.id;
 
   User.findById(id)
     .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Not found City with id " + id });
+      if (!data) res.status(404).send({ message: "Not found Pedido with id " + id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving City with id=" + id });
+        .send({ message: "Error retrieving Pedido with id=" + id });
     });
 };
 
-
-//-------------------------------------------------------------------------------------
-// Update a City by the id in the request
-UserController.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: "Data to update can not be empty!"
-    });
-  }
-
-  const id = req.params.id;
-
-  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update City with id=${id}. Maybe City was not found!`
-        });
-      } else res.send({ message: "City was updated successfully." });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error updating City with id=" + id
-      });
-    });
-};
-
-
-//-------------------------------------------------------------------------------------
-// Delete a City with the specified id in the request
 UserController.delete = (req, res) => {
   const id = req.params.id;
 
@@ -110,53 +94,21 @@ UserController.delete = (req, res) => {
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete City with id=${id}. Maybe City was not found!`
+          message: `Cannot delete Pedido with id=${id}. Maybe user was not found!`
         });
       } else {
         res.send({
-          message: "City was deleted successfully!"
+          message: "User was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete City with id=" + id
+        message: "Could not delete Pedido with id=" + id
       });
     });
 };
 
-
-//-------------------------------------------------------------------------------------
-// Delete all Cities from the database.
-UserController.deleteAll = (req, res) => {
-    User.deleteMany({})
-    .then(data => {
-      res.send({
-        message: `${data.deletedCount} Users were deleted successfully!`
-      });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all users."
-      });
-    });
-};
-
-
-//-------------------------------------------------------------------------------------
-// Find all published Tutorials
-UserController.findAllAvailable = (req, res) => {
-    User.find({ available: true })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Cities."
-      });
-    });
-};
 
 module.exports = UserController;
+
