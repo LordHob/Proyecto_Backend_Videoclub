@@ -3,8 +3,8 @@ module.exports = mongoose => {
     "orders",
     mongoose.Schema(
       {
-        idUser: Number,
-        idMovie: Number,
+        idUser: String,
+        idMovie: String,
         rantalDate: Date,
         returnDate: Date,
       },
