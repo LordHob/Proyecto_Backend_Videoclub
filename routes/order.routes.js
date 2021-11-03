@@ -4,7 +4,7 @@ const router = express.Router();
 //Importo Controllers
 const OrderController = require("../controllers/order.controller");
   
-router.post("/", OrderController.create); // Create a new movie
+router.post("/", OrderController.create); // Create a new order
 router.get("/", OrderController.findAll); // Retrieve all orders
 // router.get("/available", orders.findAllAvailable); // Retrieve all available orders
 // router.get("/:id", orders.findOne); // Retrieve a single movie with id
