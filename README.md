@@ -1,7 +1,9 @@
-# Express API Mongoose + MongoDB
+# Proyecto Backend Videoclub
 
-## COMANDOS BÁSICOS
-<br>
+Proyecto desplegado en Heroku: https://rgg-backend-videoclub.herokuapp.com/
+
+
+## TECNOLOGÍAS USADAS
 
 ![image](https://user-images.githubusercontent.com/16636086/138952802-f9f8bd82-62d5-4a24-9679-09744b41c92d.png)
 
