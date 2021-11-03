@@ -8,23 +8,7 @@ Proyecto desplegado en Heroku: https://rgg-backend-videoclub.herokuapp.com/
 ![image](https://user-images.githubusercontent.com/16636086/138952802-f9f8bd82-62d5-4a24-9679-09744b41c92d.png)
 
 ```
-npm init
-npm install
-npm update
-npm run dev
-npm run start
-
-npm install express mongoose 
-
-cadena de conexión mongoDB: mongodb://localhost:27017/ejemplo_db
-
-#### Mongo DB server
-show dbs
-use netflix_db
-db.createCollection('movies')
-db.createCollection('categories')
-
-#### END-POINTS ---------------------------------------------------------------
+ ---------- END-POINTS ----------
 #### Home
 GET - localhost:3000
 

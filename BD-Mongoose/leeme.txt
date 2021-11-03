@@ -1,1 +1,0 @@
-Bases de datos creadas en https://www.mockaroo.com/ y exportadas en archivo .json (para poder compartirlas)
