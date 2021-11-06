@@ -104,40 +104,40 @@ MovieController.findByCast = (req, res) => {
 //-------------------------------------------------------------------------------------
 // Find all movies from a specific location.
 
-MovieController.findByLocation = (req, res) => {
-  const location = req.params.location;
+// MovieController.findByLocation = (req, res) => {
+//   const location = req.params.location;
 
-  Movie.find({ location: location })
-    .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Could not find a movie with location: " + location });
-      else res.send(data);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving movie with location= " + location });
-    });
-};
+//   Movie.find({ location: location })
+//     .then(data => {
+//       if (!data)
+//         res.status(404).send({ message: "Could not find a movie with location: " + location });
+//       else res.send(data);
+//     })
+//     .catch(err => {
+//       res
+//         .status(500)
+//         .send({ message: "Error retrieving movie with location= " + location });
+//     });
+// };
 
 //-------------------------------------------------------------------------------------
 // Find all movies by availability.
 
-MovieController.findByAvailability = (req, res) => {
-  const available = req.params.available;
+// MovieController.findByAvailability = (req, res) => {
+//   const available = req.params.available;
 
-  Movie.find({ available: available })
-    .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Could not find a movie with available: " + available });
-      else res.send(data);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving movie with available= " + available });
-    });
-};
+//   Movie.find({ available: available })
+//     .then(data => {
+//       if (!data)
+//         res.status(404).send({ message: "Could not find a movie with available: " + available });
+//       else res.send(data);
+//     })
+//     .catch(err => {
+//       res
+//         .status(500)
+//         .send({ message: "Error retrieving movie with available= " + available });
+//     });
+// };
 
 
 //--- POST ----------------------------------------------------------------------------
@@ -158,8 +158,9 @@ MovieController.create = (req, res) => {
       title: req.body.title,
       genre: req.body.genre,
       cast: req.body.cast,
-      location: req.body.location,
-      available: req.body.available ? req.body.available : false
+      year: req.body.year
+      // location: req.body.location,
+      // available: req.body.available ? req.body.available : false
     });
 
     // Save Movie in the database

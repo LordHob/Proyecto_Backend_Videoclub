@@ -20,11 +20,10 @@ OrderController.create = (req, res) => {
 
   // Create a Order
   const order = new Order({
-    movieID: req.body.movieID,
-    clientId: req.body.clientId,
-    orderDate: req.body.orderDate,
+    idUser: req.body.idUser,
+    idMovie: req.body.idMovie,
+    rentalDate: req.body.reantalDate,
     returnDate: req.body.returnDate,
-    price: req.body.price
   });
 
   // Save order in the database

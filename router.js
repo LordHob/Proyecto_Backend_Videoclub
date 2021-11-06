@@ -2,9 +2,9 @@ const router = require('express').Router();
 
 //Import and define routes
 
-const UserRouter = require('./routes/user.routes');
-const MovieRouter = require('./routes/movie.routes');
-const OrderRouter = require('./routes/order.routes');
+const UserRouter = require('./routes/user.router');
+const MovieRouter = require('./routes/movie.router');
+const OrderRouter = require('./routes/order.router');
 
 //Routes
 router.use('/user', UserRouter);
