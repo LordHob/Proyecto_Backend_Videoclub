@@ -3,23 +3,23 @@
     "username": "b31cb516e4201d",
     "password": "36575221",
     "database": "heroku_fbca5e87af6690b",
-    "host": "heroku_fbca5e87af6690b",
+    "host": "eu-cdbr-west-01.cleardb.com",
     "port": "3306",
     "dialect": "mysql"
   },
   "test": {
-    "username": "remote",
-    "password": "game402510",
-    "database": "BackendVideoclub",
-    "host": "192.168.1.75",
+    "username": "b31cb516e4201d",
+    "password": "36575221",
+    "database": "heroku_fbca5e87af6690b",
+    "host": "eu-cdbr-west-01.cleardb.com",
     "port": "3306",
     "dialect": "mysql"
   },
   "production": {
-    "username": "remote",
-    "password": "game402510",
-    "database": "BackendVideoclub",
-    "host": "192.168.1.75",
+    "username": "b31cb516e4201d",
+    "password": "36575221",
+    "database": "heroku_fbca5e87af6690b",
+    "host": "eu-cdbr-west-01.cleardb.com",
     "port": "3306",
     "dialect": "mysql"
   }
