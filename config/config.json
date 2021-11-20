@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "remote",
+    "password": "game402510",
+    "database": "BackendVideoclub4",
+    "host": "192.168.1.75",
+    "port": "3306",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "remote",
+    "password": "game402510",
+    "database": "BackendVideoclub",
+    "host": "192.168.0.19",
+    "port": "3306",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "remote",
+    "password": "game402510",
+    "database": "BackendVideoclub",
+    "host": "192.168.1.75",
+    "port": "3306",
+    "dialect": "mysql"
+  }
+}
