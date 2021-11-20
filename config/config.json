@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "remote",
-    "password": "game402510",
-    "database": "BackendVideoclub",
-    "host": "192.168.1.75",
+    "username": "b31cb516e4201d",
+    "password": "36575221",
+    "database": "heroku_fbca5e87af6690b",
+    "host": "heroku_fbca5e87af6690b",
     "port": "3306",
     "dialect": "mysql"
   },
